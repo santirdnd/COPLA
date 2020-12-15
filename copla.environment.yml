@@ -1,0 +1,17 @@
+name: copla
+channels:
+- conda-forge
+- bioconda
+- defaults
+dependencies:
+- python=3
+- graph-tool>=2.33
+- numpy
+- pandas
+- blast>=2.9.0
+- prodigal>=2.6.3
+- hmmer>=3.2.1
+- plasmidfinder>=2.1
+- ruby
+- parallel
+prefix: copla

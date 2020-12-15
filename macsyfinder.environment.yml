@@ -1,0 +1,10 @@
+name: macsyfinder
+channels:
+- conda-forge
+- bioconda
+- defaults
+dependencies:
+- python=2.7
+- blast>=2.9.0
+- hmmer>=3.2.1
+prefix: macsyfinder
