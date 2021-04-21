@@ -93,7 +93,7 @@ COPLA can be used to predict the PTU to which a plasmid belongs. For this just i
 ~~~bash
 bin/copla.py test/NZ_CP028167.1.fna \
     databases/Copla_RS84/RS84f_sHSBM.pickle \
-    databases/Copla_RS84/CoplaDB.lst \
+    databases/Copla_RS84/CoplaDB.fofn \
     test/NZ_CP028167.1_output
 ~~~
 
