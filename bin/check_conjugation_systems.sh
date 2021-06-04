@@ -7,7 +7,7 @@ if [ $# -ne 5 ]; then
     exit 2
 fi
 
-source "${HOME}/miniconda3/etc/profile.d/conda.sh"
+source "$(dirname "${CONDA_EXE%/*}")"/etc/profile.d/conda.sh
 conda activate macsyfinder
 
 QRYFILE=$1

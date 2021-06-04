@@ -66,6 +66,12 @@ check_conda(){
         REQUIRED='4.5'
         version_check ${VERSION} ${REQUIRED}
     fi
+
+    CONDA_SHELL_INT="$(dirname "${CONDA_EXE%/*}")"/etc/profile.d/conda.sh
+    if [ ! -e "${CONDA_SHELL_INT}" ]; then
+        echo "  Error! Please check how conda integrates with your shell"
+        echo "         For copla to activate the macsyfinder environment it is assumed that ${CONDA_SHELL_INT} can be sourced"
+    fi
 }
 
 check_perl(){
@@ -208,7 +214,7 @@ check_macsyfinder(){
             version_check ${VERSION} ${REQUIRED}
         fi
     else
-        source "${HOME}/miniconda3/etc/profile.d/conda.sh"
+        source "$(dirname "${CONDA_EXE%/*}")"/etc/profile.d/conda.sh
         conda activate macsyfinder
 
         EXE_PATH=`which ${EXE}`

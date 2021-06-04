@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "${HOME}/miniconda3/etc/profile.d/conda.sh"
+source "$(dirname "${CONDA_EXE%/*}")"/etc/profile.d/conda.sh
 conda activate copla
 
 # NZ_CP028167.1
