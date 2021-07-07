@@ -32,7 +32,7 @@ my $seq = '';
 my $line;
 
 # Join multifasta contigs into one contig. TODO: Check other strategies (row of Ns, sort by length, ...)
-system("mkdir -p $work_dir");
+system("mkdir -p $work_dir") or die;
 open my $OUT, '>', "$fname_tmp" or die "Unable to write to $fname_tmp: $!\n";
 open my $IN, '<', "$fname_qry" or die "Unable to read from $fname_qry: $!\n";
 $line = <$IN>;
@@ -51,7 +51,7 @@ $len_qry = length($seq);
 
 #system("echo $threads > $threads_conf");
 #system("cat $ref_fofn | parallel -j $threads_conf bin/get_ani_identity_job.pl $fname_tmp $len_qry {}");
-system("cat $ref_fofn | parallel bin/get_ani_identity_job.pl $fname_tmp $len_qry {}");
+system("cat $ref_fofn | parallel bin/get_ani_identity_job.pl $fname_tmp $len_qry {}") or die;
 
 opendir my $DIR, $work_dir or die "Unable to open directory $work_dir: $!\n";
 my @files = grep(/\.tsv$/, readdir($DIR));
@@ -72,4 +72,4 @@ for my $fname (@files) {
 }
 close $OUT;
 
-system("rm -r $work_dir");
+system("rm -r $work_dir") or die;
