@@ -55,4 +55,4 @@ if ($len_core <= $window) {
     $threshold = 1 + int(($len_core - $window) / $step);
 }
 
-system("bin/ani.rb -1 $fname_qry -2 $fname_ref -T $fname_tsv -n $threshold -w $window -s $step -d 3 -t 1 -q > /dev/null 2>&1");
+system("bin/ani.rb -1 $fname_qry -2 $fname_ref -T $fname_tsv -n $threshold -w $window -s $step -d 3 -t 1 -q > /dev/null 2>&1") or die;

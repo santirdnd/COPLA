@@ -109,7 +109,14 @@ def run_mobscan(fname, outdir):
 
     fname_out = os.path.join(outdir, 'results_tab.tsv')
     cmd = ['bin/hmmscan_domtblout_summarize.py', '-e', '0.01', '-i', '0.01', '-c', '0.6', fname_dom, fname_out]
-    cp = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    try:
+        cp = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except OSError as msg:
+        print("Error:", ' '.join(cmd), 'Failure', msg, file=sys.stderr)
+        sys.exit(1)
+    except subprocess.CalledProcessError as msg:
+        print("Error:", ' '.join(cmd), 'Failure', msg, file=sys.stderr)
+        sys.exit(1)
 
     mob = []
     if not os.path.isfile(fname_out):
@@ -138,8 +145,15 @@ def run_conjscan(fname, outdir, type, topology):
     # Check why using a list does not work
     #cmd = ['bin/check_conjugation_systems.sh', fname, outdir, type, topology, 'databases/MacSyFinder_190530/Conjugation']
     #cp = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
-    cp = subprocess.run('bin/check_conjugation_systems.sh ' + fname + ' ' + outdir + ' ' + type + ' ' + topology + ' databases/MacSyFinder_190530/Conjugation', \
+    try:
+        cp = subprocess.run('bin/check_conjugation_systems.sh ' + fname + ' ' + outdir + ' ' + type + ' ' + topology + ' databases/MacSyFinder_190530/Conjugation', \
                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
+    except OSError as msg:
+        print("Error:", ' '.join(cmd), 'Failure', msg, file=sys.stderr)
+        sys.exit(1)
+    except subprocess.CalledProcessError as msg:
+        print("Error:", ' '.join(cmd), 'Failure', msg, file=sys.stderr)
+        sys.exit(1)
 
     mpf = []
     fname_out = os.path.join(outdir, 'results_tab.summary.tsv')
@@ -169,7 +183,14 @@ def run_pfinder(fname, outdir):
     #cmd = ['plasmidfinder.py', '-i', fname, '-o', outdir, '-t', '0.80', '-x', '-q']
     # To search against PlasmidFinder database version from 2019/07/31
     cmd = ['plasmidfinder.py', '-i', fname, '-o', outdir, '-t', '0.80', '-x', '-q', '-p', 'databases/PlasmidFinder_190731', '-d', 'enterobacteriaceae,gram_positive']
-    cp = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    try:
+        cp = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except OSError as msg:
+        print("Error:", ' '.join(cmd), 'Failure', msg, file=sys.stderr)
+        sys.exit(1)
+    except subprocess.CalledProcessError as msg:
+        print("Error:", ' '.join(cmd), 'Failure', msg, file=sys.stderr)
+        sys.exit(1)
 
     rep = []
     fname_out = os.path.join(outdir, 'results_tab.tsv')
@@ -503,7 +524,14 @@ else:
     else:
         prodigal_mode = 'meta'
     cmd = ['prodigal', '-p', prodigal_mode, '-i', fname_fna, '-a', fname_faa, '-o', '/dev/null', '-q']
-    cp = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    try:
+        cp = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except OSError as msg:
+        print("Error:", ' '.join(cmd), 'Failure', msg, file=sys.stderr)
+        sys.exit(1)
+    except subprocess.CalledProcessError as msg:
+        print("Error:", ' '.join(cmd), 'Failure', msg, file=sys.stderr)
+        sys.exit(1)
 
 # Load RefSeq84 plasmid network
 fh = open(args.refgraph, 'rb')
@@ -543,7 +571,14 @@ g.vertex_properties['HRangeRef'] = g.vp.HRange.copy()
 
 # Populate query edges with database plasmids
 cmd = ['bin/get_ani_identity.pl', fname_fna, args.reflist]
-cp = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+try:
+    cp = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+except OSError as msg:
+    print("Error:", ' '.join(cmd), 'Failure', msg, file=sys.stderr)
+    sys.exit(1)
+except subprocess.CalledProcessError as msg:
+    print("Error:", ' '.join(cmd), 'Failure', msg, file=sys.stderr)
+    sys.exit(1)
 insert_ani_edges(g, fname_fna+'.ani.tsv')
 
 # Additional plasmid characteristics
